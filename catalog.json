@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "storage": {
+    "provider": "github-pages",
+    "base_url": "",
+    "_note": "Leave base_url empty to serve files from this GitHub Pages site. Move the previews/ and artwork/ folders to Cloudflare R2 (or any host) later and put its address here; every player and link follows."
+  },
+  "defaults": {
+    "artist": "NETFETTI"
+  },
+  "tracks": [
+    {
+      "track_id": "demo-tape-demo-one",
+      "title": "Demo One",
+      "artist": "NETFETTI",
+      "description": "Demo clip — delete once your real previews are uploaded.",
+      "category": "Music",
+      "tags": [],
+      "album": "Demo Tape",
+      "product": "demo-tape",
+      "duration": 30.0,
+      "full_duration": 90.0,
+      "file_size": 481165,
+      "file_url": "previews/demo-tape-demo-one.mp3",
+      "artwork_url": "artwork/demo-tape-demo-one.jpg",
+      "date_added": "2026-11-07",
+      "visibility": "public"
+    },
+    {
+      "track_id": "demo-tape-demo-three",
+      "title": "Demo Three",
+      "artist": "NETFETTI",
+      "description": "Demo clip — delete once your real previews are uploaded.",
+      "category": "Music",
+      "tags": [],
+      "album": "Demo Tape",
+      "product": "demo-tape",
+      "duration": 30.0,
+      "full_duration": 90.0,
+      "file_size": 481167,
+      "file_url": "previews/demo-tape-demo-three.mp3",
+      "artwork_url": "artwork/demo-tape-demo-three.jpg",
+      "date_added": "2026-11-07",
+      "visibility": "public"
+    },
+    {
+      "track_id": "demo-tape-demo-two",
+      "title": "Demo Two",
+      "artist": "NETFETTI",
+      "description": "Demo clip — delete once your real previews are uploaded.",
+      "category": "Music",
+      "tags": [],
+      "album": "Demo Tape",
+      "product": "demo-tape",
+      "duration": 30.0,
+      "full_duration": 90.0,
+      "file_size": 481165,
+      "file_url": "previews/demo-tape-demo-two.mp3",
+      "artwork_url": "artwork/demo-tape-demo-two.jpg",
+      "date_added": "2026-11-07",
+      "visibility": "public"
+    }
+  ],
+  "playlists": [
+    {
+      "playlist_id": "demo-tape",
+      "description": "",
+      "visibility": "public",
+      "name": "Demo Tape",
+      "product": "demo-tape",
+      "tracks": [
+        "demo-tape-demo-one",
+        "demo-tape-demo-three",
+        "demo-tape-demo-two"
+      ]
+    }
+  ]
+}

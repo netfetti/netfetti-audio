@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NETFETTI — Listen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap">
+<style>
+  :root { --ink:#121212; --ground:#F5F5F2; --muted:#5C5C58; --accent:#2B3BFF;
+    --serif:'Instrument Serif',Georgia,serif; --sans:'Instrument Sans','Helvetica Neue',sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace; }
+  body { margin:0; min-height:100vh; background:var(--ground); color:var(--ink); font-family:var(--sans);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px; padding:40px 16px; box-sizing:border-box; }
+  .brand { font-weight:600; letter-spacing:.22em; font-size:18px; }
+  .box { width:100%; max-width:560px; }
+  a.shop { font-size:14px; border-bottom:1px solid currentColor; color:inherit; text-decoration:none; }
+  a.shop:hover { color:var(--accent); }
+</style>
+</head>
+<body>
+  <span class="brand">NETFETTI</span>
+  <div class="box"><div id="p" data-netfetti-player></div></div>
+  <a class="shop" href="https://netfetti.com">Get the full release at netfetti.com</a>
+  <script>
+    var q = new URLSearchParams(location.search), el = document.getElementById('p');
+    ['playlist', 'track', 'product'].forEach(function (k) { if (q.get(k)) el.dataset[k] = q.get(k); });
+  </script>
+  <script src="player.js" defer></script>
+</body>
+</html>

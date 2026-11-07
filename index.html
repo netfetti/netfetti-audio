@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NETFETTI Audio Library</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap">
+<style>
+  :root { --ink:#121212; --ink-2:#3A3A37; --muted:#5C5C58; --ground:#F5F5F2; --panel:#E9E9E4; --rule:#D8D8D3; --accent:#2B3BFF;
+    --serif:'Instrument Serif',Georgia,serif; --sans:'Instrument Sans','Helvetica Neue',sans-serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace; }
+  *,*::before,*::after { box-sizing:border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font:16px/1.55 var(--sans); -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  h1,h2,h3,p { margin:0; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 40px; }
+  header { border-bottom:1px solid var(--rule); }
+  header .wrap { display:flex; justify-content:space-between; align-items:center; gap:16px; padding-top:18px; padding-bottom:18px; flex-wrap:wrap; }
+  .brand { font-weight:600; letter-spacing:.22em; font-size:18px; }
+  .eyebrow { font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .h1 { font-family:var(--serif); font-weight:400; font-size:clamp(40px,6vw,64px); line-height:1; }
+  .h2 { font-family:var(--serif); font-weight:400; font-size:32px; line-height:1.1; }
+  .lead { color:var(--ink-2); max-width:620px; }
+  .intro { padding:56px 0 32px; display:flex; flex-direction:column; gap:16px; }
+  .stats { display:flex; gap:24px; flex-wrap:wrap; font-family:var(--mono); font-size:12px; color:var(--muted); }
+  .tools { display:flex; gap:8px; flex-wrap:wrap; padding-bottom:20px; border-bottom:1px solid var(--rule); margin-bottom:8px; }
+  .tools input { flex:1 1 260px; min-width:0; font:15px var(--sans); padding:12px 14px; border:1px solid var(--ink); background:#fff; border-radius:0; }
+  .chip { min-height:46px; padding:10px 18px; border:1px solid var(--ink); background:transparent; font:14px var(--sans); cursor:pointer; }
+  .chip.on, .chip:hover { background:var(--ink); color:var(--ground); }
+  section { padding:32px 0 48px; }
+  .row { display:grid; grid-template-columns:56px 1fr auto; gap:16px; align-items:center; padding:16px 0; border-bottom:1px solid var(--rule); }
+  .art { width:56px; height:56px; background:var(--panel); overflow:hidden; }
+  .art img { width:100%; height:100%; object-fit:cover; display:block; }
+  .t { font-family:var(--serif); font-size:22px; line-height:1.15; }
+  .m { font-family:var(--mono); font-size:12px; color:var(--muted); display:flex; gap:12px; flex-wrap:wrap; margin-top:2px; }
+  .m .priv { color:#B3261E; }
+  .acts { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+  .b { min-height:40px; padding:8px 14px; border:1px solid var(--ink); background:transparent; font:13px var(--sans); cursor:pointer; white-space:nowrap; }
+  .b:hover { background:var(--ink); color:var(--ground); }
+  .b.play { background:var(--ink); color:var(--ground); min-width:72px; }
+  .b.play:hover { background:var(--accent); border-color:var(--accent); }
+  .b:focus-visible, .chip:focus-visible, input:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .url { grid-column:2 / -1; font-family:var(--mono); font-size:12px; color:var(--ink-2); word-break:break-all; }
+  .empty { padding:40px 0; color:var(--muted); }
+  .demo { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; }
+  pre { margin:0; background:var(--ink); color:#E9E9E4; padding:18px; font:12px/1.6 var(--mono); overflow-x:auto; white-space:pre; }
+  .card { min-width:0; display:flex; flex-direction:column; gap:12px; }
+  .toast { position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(16px); opacity:0; visibility:hidden; pointer-events:none; background:var(--ink); color:var(--ground); padding:12px 20px; font-size:14px; transition:all .2s; z-index:9; }
+  .toast.show { transform:translateX(-50%) translateY(0); opacity:1; visibility:visible; }
+  footer { border-top:1px solid var(--rule); padding:32px 0 48px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+  @media (max-width:720px){ .wrap{padding:0 16px;} .row{grid-template-columns:48px 1fr;} .art{width:48px;height:48px;} .acts{grid-column:1 / -1; justify-content:flex-start;} .url{grid-column:1 / -1;} }
+</style>
+</head>
+<body>
+<header><div class="wrap"><span class="brand">NETFETTI</span><span class="eyebrow">Audio library</span></div></header>
+
+<main class="wrap">
+  <div class="intro">
+    <span class="eyebrow">Preview clips</span>
+    <h1 class="h1">Audio library</h1>
+    <p class="lead">Every clip here has a permanent link you can use anywhere. Copy the direct MP3 link for any player, or the Big Cartel code to drop a styled player onto a product page.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="tools">
+    <input id="q" type="search" placeholder="Search title, album, tag or product" aria-label="Search">
+    <button class="chip on" data-view="tracks" type="button">Tracks</button>
+    <button class="chip" data-view="playlists" type="button">Playlists</button>
+  </div>
+
+  <div id="list" aria-live="polite"></div>
+
+  <section>
+    <span class="eyebrow">Embedding</span>
+    <h2 class="h2" style="margin:8px 0 20px">Use these links anywhere</h2>
+    <div class="demo">
+      <div class="card">
+        <strong>Styled player (Big Cartel or any site)</strong>
+        <pre id="ex-player"></pre>
+        <div data-netfetti-player data-playlist="" id="live-demo"></div>
+      </div>
+      <div class="card">
+        <strong>Plain HTML5 audio</strong>
+        <pre id="ex-html"></pre>
+        <strong>JavaScript</strong>
+        <pre id="ex-js"></pre>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap" id="foot">Catalog: catalog.json</div></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var BASE = location.href.replace(/[?#].*$/, '').replace(/[^/]*$/, '');
+  var cat, url, view = 'tracks', current = null, audio = new Audio();
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+  var fmt = function (s) { s = Math.round(s || 0); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); };
+  var mb = function (b) { return (b / 1e6).toFixed(2) + ' MB'; };
+
+  function toast(msg) { var t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('show'); }, 1800); }
+  function copy(text, msg) {
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { toast(msg); }, function () {
+      var a = document.createElement('textarea'); a.value = text; document.body.appendChild(a); a.select();
+      try { document.execCommand('copy'); toast(msg); } catch (e) { prompt('Copy this:', text); } a.remove();
+    });
+  }
+  var scriptTag = function () { return '<script src="' + BASE + 'player.js" defer><\/script>'; };
+
+  function trackRow(t) {
+    var link = url(t.file_url), art = t.artwork_url ? url(t.artwork_url) : '';
+    var hay = [t.title, t.artist, t.album, t.product, t.category, (t.tags || []).join(' ')].join(' ').toLowerCase();
+    return '<div class="row" data-hay="' + esc(hay) + '">' +
+      '<div class="art">' + (art ? '<img src="' + esc(art) + '" alt="" loading="lazy">' : '') + '</div>' +
+      '<div><div class="t">' + esc(t.title) + '</div><div class="m">' +
+        '<span>' + esc(t.artist || cat.defaults.artist || '') + '</span>' +
+        (t.album ? '<span>' + esc(t.album) + '</span>' : '') +
+        '<span>' + fmt(t.duration) + '</span><span>' + mb(t.file_size || 0) + '</span>' +
+        (t.product ? '<span>product: ' + esc(t.product) + '</span>' : '') +
+        '<span>id: ' + esc(t.track_id) + '</span>' +
+        (t.visibility === 'private' ? '<span class="priv">private · hidden from players</span>' : '') +
+      '</div></div>' +
+      '<div class="acts">' +
+        '<button class="b play" type="button" data-play="' + esc(link) + '">Play</button>' +
+        '<button class="b" type="button" data-copy="' + esc(link) + '" data-msg="MP3 link copied">Copy MP3 link</button>' +
+        '<button class="b" type="button" data-copy="' + esc('<div data-netfetti-player data-track="' + t.track_id + '"></div>\n' + scriptTag()) + '" data-msg="Player code copied">Copy player code</button>' +
+      '</div>' +
+      '<div class="url">' + esc(link) + '</div></div>';
+  }
+
+  function listRow(p) {
+    var n = (p.tracks || []).length;
+    var hay = [p.name, p.product, p.description].join(' ').toLowerCase();
+    var share = BASE + 'play.html?playlist=' + encodeURIComponent(p.playlist_id);
+    return '<div class="row" data-hay="' + esc(hay) + '">' +
+      '<div class="art"></div>' +
+      '<div><div class="t">' + esc(p.name) + '</div><div class="m"><span>' + n + ' tracks</span>' +
+        (p.product ? '<span>product: ' + esc(p.product) + '</span>' : '') + '<span>id: ' + esc(p.playlist_id) + '</span>' +
+        (p.visibility === 'private' ? '<span class="priv">private · hidden from players</span>' : '') + '</div></div>' +
+      '<div class="acts">' +
+        '<button class="b" type="button" data-copy="' + esc(share) + '" data-msg="Share link copied">Copy share page</button>' +
+        '<button class="b" type="button" data-copy="' + esc('<div data-netfetti-player data-playlist="' + p.playlist_id + '"></div>\n' + scriptTag()) + '" data-msg="Player code copied">Copy player code</button>' +
+      '</div><div class="url">' + esc(share) + '</div></div>';
+  }
+
+  function render() {
+    var items = view === 'tracks' ? cat.tracks : cat.playlists;
+    $('#list').innerHTML = items.length ? items.map(view === 'tracks' ? trackRow : listRow).join('')
+      : '<p class="empty">Nothing here yet. Run tools/make_previews.py and upload the results — see README.md.</p>';
+    filter();
+  }
+  function filter() {
+    var q = $('#q').value.trim().toLowerCase();
+    document.querySelectorAll('#list .row').forEach(function (r) { r.hidden = q && r.dataset.hay.indexOf(q) < 0; });
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.view) {
+      view = b.dataset.view;
+      document.querySelectorAll('[data-view]').forEach(function (c) { c.classList.toggle('on', c === b); });
+      render();
+    } else if (b.dataset.copy) {
+      copy(b.dataset.copy, b.dataset.msg);
+    } else if (b.dataset.play) {
+      if (current === b && !audio.paused) { audio.pause(); return; }
+      if (current) current.textContent = 'Play';
+      if (current !== b) audio.src = b.dataset.play;
+      current = b; audio.play(); b.textContent = 'Pause';
+    }
+  });
+  audio.addEventListener('pause', function () { if (current) current.textContent = 'Play'; });
+  audio.addEventListener('ended', function () { if (current) current.textContent = 'Play'; });
+  $('#q').addEventListener('input', filter);
+
+  fetch('catalog.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (c) {
+    cat = c; cat.defaults = cat.defaults || {}; cat.tracks = cat.tracks || []; cat.playlists = cat.playlists || [];
+    var base = (cat.storage && cat.storage.base_url) || BASE; if (base.slice(-1) !== '/') base += '/';
+    url = function (p) { return !p ? '' : /^https?:\/\//.test(p) ? p : base + p.replace(/^\//, ''); };
+    var bytes = cat.tracks.reduce(function (s, t) { return s + (t.file_size || 0); }, 0);
+    $('#stats').innerHTML = '<span>' + cat.tracks.length + ' tracks</span><span>' + cat.playlists.length + ' playlists</span><span>' + mb(bytes) + ' of 1,000 MB</span><span>files served from ' + esc(base) + '</span>';
+    render();
+
+    var t = cat.tracks[0], p = cat.playlists[0];
+    var link = t ? url(t.file_url) : BASE + 'previews/your-track.mp3';
+    $('#ex-player').textContent = '<!-- Big Cartel product page: matches the product\'s permalink -->\n<div data-netfetti-player data-product="{{ product.permalink }}"></div>\n' + scriptTag();
+    $('#ex-html').textContent = '<audio controls preload="metadata">\n  <source src="' + link + '" type="audio/mpeg">\n</audio>';
+    $('#ex-js').textContent = 'const audio = new Audio("' + link + '");\naudio.play();';
+    if (p) { $('#live-demo').dataset.playlist = p.playlist_id; } else if (t) { $('#live-demo').dataset.track = t.track_id; }
+    var s = document.createElement('script'); s.src = 'player.js'; document.body.appendChild(s);
+    $('#foot').textContent = 'Catalog: ' + BASE + 'catalog.json · updated by tools/make_previews.py';
+  }).catch(function () { $('#list').innerHTML = '<p class="empty">Couldn\'t load catalog.json.</p>'; });
+})();
+</script>
+</body>
+</html>
