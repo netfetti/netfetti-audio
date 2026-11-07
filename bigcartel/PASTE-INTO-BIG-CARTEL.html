@@ -1,0 +1,42 @@
+<!--
+  NETFETTI preview player — Big Cartel code
+
+  ─────────────────────────────────────────────────────────────────────
+  STEP 1 · Load the player once, on every page
+  Big Cartel admin › Design › Customize › Code (or "Integration code") ›
+  paste this at the very end of the BODY box (or just before </body> in Layout).
+  ─────────────────────────────────────────────────────────────────────
+-->
+<script src="https://netfetti.github.io/netfetti-audio/player.js" defer></script>
+
+
+<!--
+  ─────────────────────────────────────────────────────────────────────
+  STEP 2 · Show it on music product pages
+  Big Cartel admin › Design › Code › Product page.
+  Find this line (it's in the NETFETTI theme, inside "product-info"):
+
+      {% if product.description != blank %}
+
+  …and paste the block below directly ABOVE it, so the player sits
+  under the title and above the description.
+  ─────────────────────────────────────────────────────────────────────
+-->
+{% if is_music %}
+  <div data-netfetti-player data-product="{{ product.permalink }}" data-hide-empty></div>
+{% endif %}
+
+
+<!--
+  HOW IT MATCHES
+  Each product's permalink is the last part of its URL:
+      netfetti.com/product/midnight-drive   →   midnight-drive
+  Run the preview script with  --product midnight-drive  and that product
+  page shows those clips automatically. Products with no clips show nothing
+  (that's what data-hide-empty does).
+
+  OTHER WAYS TO USE IT (any page, any website)
+      <div data-netfetti-player data-track="TRACK_ID"></div>
+      <div data-netfetti-player data-playlist="PLAYLIST_ID"></div>
+  Get the IDs from the library page: https://netfetti.github.io/netfetti-audio/
+-->
